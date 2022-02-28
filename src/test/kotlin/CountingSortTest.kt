@@ -11,7 +11,7 @@ class CountingSortTest {
 
     @Test
     fun `Counting sort test versus manual sort`() {
-        Assertions.assertEquals(listOf(2, 2, 5, 7, 10, 15, 23 ,45), countingSort(listOf(10, 23, 45, 15, 5, 2, 2, 7)))
+        Assertions.assertEquals(listOf(-2, 2, 5, 7, 10, 15, 23 ,45), countingSort(listOf(10, 23, 45, 15, 5, -2, 2, 7)))
     }
 
     @Test
