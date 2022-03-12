@@ -4,7 +4,7 @@ import kotlin.math.PI
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
-class Sin: MathFunction<Number> {
+open class Sin : MathFunction<Number> {
     override fun invoke(vararg args: Number, precision: Double): Double {
         val x = args[0].toDouble()
         return if (x.isSpecial) x else generateSequence(x to 1) {
@@ -13,7 +13,7 @@ class Sin: MathFunction<Number> {
     }
 }
 
-class Cos: MathFunction<Number> {
+open class Cos : MathFunction<Number> {
     val sin = Sin()
 
     override fun invoke(vararg args: Number, precision: Double): Double =
@@ -22,7 +22,7 @@ class Cos: MathFunction<Number> {
         }
 }
 
-class Cot: MathFunction<Number> {
+open class Cot : MathFunction<Number> {
     val cos = Cos()
     val sin = Sin()
 
@@ -36,7 +36,7 @@ class Cot: MathFunction<Number> {
         }
 }
 
-class Sec: MathFunction<Number> {
+open class Sec : MathFunction<Number> {
     val cos = Cos()
 
     override fun invoke(vararg args: Number, precision: Double): Double =
@@ -49,7 +49,7 @@ class Sec: MathFunction<Number> {
         }
 }
 
-class Csc: MathFunction<Number> {
+open class Csc : MathFunction<Number> {
     val sin = Sin()
 
     override fun invoke(vararg args: Number, precision: Double): Double =

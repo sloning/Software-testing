@@ -3,7 +3,7 @@ package math
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
-class Ln: MathFunction<Number> {
+open class Ln: MathFunction<Number> {
     override fun invoke(vararg args: Number, precision: Double): Double {
         val x = args[0].toDouble()
         return if (x <= 0 || x.isSpecial) Double.NaN else {
@@ -16,7 +16,7 @@ class Ln: MathFunction<Number> {
     }
 }
 
-class Log: MathFunction<Number> {
+open class Log: MathFunction<Number> {
     var ln = Ln()
 
     override fun invoke(vararg args: Number, precision: Double): Double {
