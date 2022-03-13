@@ -9,7 +9,7 @@ open class Sin : MathFunction<Number> {
         val x = args[0].toDouble()
         return if (x.isSpecial) x else generateSequence(x to 1) {
             it.first * -x.pow(2) / ((2 * it.second) * (2 * it.second + 1)) to it.second + 1
-        }.takeWhile { it.first.absoluteValue > precision }.sumOf { it.first }
+        }.takeWhile { it.first.absoluteValue > precision }.sumOf { it.first }.normalize(precision)
     }
 }
 
@@ -18,7 +18,7 @@ open class Cos : MathFunction<Number> {
 
     override fun invoke(vararg args: Number, precision: Double): Double =
         args[0].toDouble().let {
-            return if (it.isSpecial) it else sin(2 * it, precision = precision) / (2 * sin(it, precision = precision))
+            return if (it.isSpecial) it else sin(it + PI / 2, precision = precision).normalize(precision)
         }
 }
 
@@ -43,7 +43,7 @@ open class Sec : MathFunction<Number> {
         args[0].toDouble().let {
             when {
                 it.isSpecial -> it
-                (it % (PI / 2) == 0.0) && (it % PI != 0.0) -> Double.NaN
+                (it % (PI / 2) == 0.0) && (it % PI != 0.0) -> Double.POSITIVE_INFINITY
                 else -> 1 / cos(it, precision = precision)
             }
         }

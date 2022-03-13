@@ -24,12 +24,11 @@ class System : MathFunction<Number> {
                 x,
                 precision = precision
             ) / sin(x, precision = precision)).pow(3))))
-        else (((((log(x, 5, precision = precision) / log(x, 2, precision = precision)) * log(
-            x,
-            2,
-            precision = precision
-        )) - log(x, 3, precision = precision)) + (ln(x, precision = precision) / log(x, 3, precision = precision))).pow(
-            3
-        ))
+        else
+            (((((log(x, 5, precision = precision) / log(x, 2, precision = precision)) * log(
+                x,
+                2,
+                precision = precision
+            )) - log(x, 3, precision = precision)) + (ln(x) / log(x, 3, precision = precision))).pow(3))
     }
 }
