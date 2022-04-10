@@ -48,10 +48,12 @@ class UnauthorizedTests {
         val urlSuccessMatch = WebDriverWait(
             driver,
             Duration.ofSeconds(10)
-        ).until(ExpectedConditions.or(
-            ExpectedConditions.urlContains("https://stackoverflow.com/search"),
-            ExpectedConditions.urlContains("https://stackoverflow.com/questions/tagged")
-        ))
+        ).until(
+            ExpectedConditions.or(
+                ExpectedConditions.urlContains("https://stackoverflow.com/search"),
+                ExpectedConditions.urlContains("https://stackoverflow.com/questions/tagged")
+            )
+        )
 
         assertTrue(urlSuccessMatch)
     }
