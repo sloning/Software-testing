@@ -55,4 +55,22 @@ class UnauthorizedTests {
 
         assertTrue(urlSuccessMatch)
     }
+
+    @Test
+    fun openQuestionPageTest() {
+        val menu = driver.findElement(By.xpath("//header/div/div[1]"))
+
+        driver.findElement(By.xpath("//header/div/a[1]")).click()
+        val isMenuOpened = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(ExpectedConditions.attributeContains(menu, "style", "display: block"))
+        driver.findElement(By.xpath("//a[@id='nav-questions']")).click()
+        val urlSuccessMatch = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(ExpectedConditions.urlToBe("https://stackoverflow.com/questions"))
+
+        assertTrue(urlSuccessMatch)
+    }
 }

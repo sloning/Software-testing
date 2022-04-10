@@ -33,10 +33,6 @@ class AuthorizedTests {
         driver.get("https://stackoverflow.com/")
 
         driver.findElement(By.xpath("//li/a[contains(@href, 'https://stackoverflow.com/users/login')]")).click()
-        val urlLoginPageMatch = WebDriverWait(
-            driver,
-            Duration.ofSeconds(10)
-        ).until(ExpectedConditions.urlContains("https://stackoverflow.com/users/login"))
 
         val emailInput = driver.findElement(By.xpath("//input[@id='email']"))
         val passwordInput = driver.findElement(By.xpath("//input[@id='password']"))
