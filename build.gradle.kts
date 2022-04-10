@@ -2,10 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.10"
-    application
 }
 
-group = "me.vladislav"
+group = "lab.softwaretesting"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -16,7 +15,9 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:4.4.0")
+    testImplementation("org.seleniumhq.selenium:selenium-java:4.1.3")
+    testImplementation("io.github.bonigarcia:webdrivermanager:5.1.1")
+    testImplementation("org.slf4j:slf4j-api:1.7.36")
 }
 
 tasks.test {
@@ -25,8 +26,4 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
-}
-
-application {
-    mainClass.set("MainKt")
 }
