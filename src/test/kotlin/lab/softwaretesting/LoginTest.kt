@@ -54,7 +54,9 @@ class LoginTest {
             driver,
             Duration.ofSeconds(10)
         ).until(ExpectedConditions.urlToBe("https://stackoverflow.com/"))
+        val profileLink =
+            driver.findElement(By.xpath("//a[@data-gps-track='profile_summary.click()']"))
 
-        assertTrue(urlSuccessMatch)
+        assertTrue(profileLink != null)
     }
 }

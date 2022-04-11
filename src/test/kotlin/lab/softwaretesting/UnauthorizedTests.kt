@@ -61,17 +61,80 @@ class UnauthorizedTests {
     @Test
     fun openQuestionPageTest() {
         val menu = driver.findElement(By.xpath("//header/div/div[1]"))
-
         driver.findElement(By.xpath("//header/div/a[1]")).click()
         val isMenuOpened = WebDriverWait(
             driver,
             Duration.ofSeconds(10)
         ).until(ExpectedConditions.attributeContains(menu, "style", "display: block"))
         driver.findElement(By.xpath("//a[@id='nav-questions']")).click()
+        driver.findElement(By.xpath("//div[@id='questions']/div[1]//h3[@class='s-post-summary--content-title']/a"))
+            .click()
         val urlSuccessMatch = WebDriverWait(
             driver,
             Duration.ofSeconds(10)
-        ).until(ExpectedConditions.urlToBe("https://stackoverflow.com/questions"))
+        ).until(ExpectedConditions.urlMatches("https:\\/\\/stackoverflow.com\\/questions\\/\\d+\\/.*"))
+
+        assertTrue(urlSuccessMatch)
+    }
+
+    @Test
+    fun changeQuestionsTabTest() {
+        val menu = driver.findElement(By.xpath("//header/div/div[1]"))
+        driver.findElement(By.xpath("//header/div/a[1]")).click()
+        val isMenuOpened = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(ExpectedConditions.attributeContains(menu, "style", "display: block"))
+        driver.findElement(By.xpath("//a[@id='nav-questions']")).click()
+
+        val newestLink = driver.findElement(By.xpath("//a[@data-nav-value='Newest']"))
+        newestLink.click()
+        val urlNewestSuccessMatch = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(ExpectedConditions.urlToBe("https://stackoverflow.com/questions?tab=Newest"))
+
+        val activeLink = driver.findElement(By.xpath("//a[@data-nav-value='Active']"))
+        activeLink.click()
+        val urlActiveSuccessMatch = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(ExpectedConditions.urlToBe("https://stackoverflow.com/questions?tab=Active"))
+
+        assertTrue(urlNewestSuccessMatch && urlActiveSuccessMatch)
+    }
+
+    @Test
+    fun filterQuestionsTest() {
+        val menu = driver.findElement(By.xpath("//header/div/div[1]"))
+        driver.findElement(By.xpath("//header/div/a[1]")).click()
+        val isMenuOpened = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(ExpectedConditions.attributeContains(menu, "style", "display: block"))
+        driver.findElement(By.xpath("//a[@id='nav-questions']")).click()
+
+        val filterMenu = driver.findElement(By.xpath("//form[@id='uql-form']"))
+        val tagInput = driver.findElement(By.xpath("//form[@id='uql-form']/div/div/div[1]/div/div[3]/div/div/input"))
+        driver.findElement(By.xpath("//button[@data-se-uql-target='toggleFormButton']")).click()
+        val isFilterMenuOpened = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(ExpectedConditions.attributeContains(filterMenu, "class", "is-expanded"))
+        tagInput.sendKeys(PropertiesManager.getProperty("searchQuery"))
+        tagInput.sendKeys(Keys.ENTER)
+        val urlSuccessMatch = WebDriverWait(
+            driver,
+            Duration.ofSeconds(10)
+        ).until(
+            ExpectedConditions.urlMatches(
+                "https:\\/\\/stackoverflow.com\\/questions\\/tagged\\/${
+                    PropertiesManager.getProperty(
+                        "searchQuery"
+                    )
+                }.*"
+            )
+        )
 
         assertTrue(urlSuccessMatch)
     }
